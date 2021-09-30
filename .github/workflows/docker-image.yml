@@ -7,19 +7,16 @@ on:
     branches: [ master ]
 
 jobs:
-
   build-the-thing:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: docker build . --file BlazerDockerTest/Dockerfile
   
   list-the-files:
+    needs: build-the-thing
     runs-on: ubuntu-latest
-    
     steps:
     - uses: actions/checkout@v2
     - name: Example step to run a command 
