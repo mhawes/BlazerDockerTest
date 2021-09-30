@@ -1,0 +1,26 @@
+This is an example file for checking the PR functionality
+
+
+
+
+I'm not personally a fan of the github PR functionality
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+it can be quite long winded and hard to navigate when there are a lot of changes. 
