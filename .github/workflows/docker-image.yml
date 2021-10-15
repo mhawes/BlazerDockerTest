@@ -22,13 +22,13 @@ jobs:
         docker build . --file BlazerDockerTest/Dockerfile -t martintestregistry.azurecr.io/blazor-docker-test:${{ github.sha }}
         docker push martintestregistry.azurecr.io/blazor-docker-test:${{ github.sha }}
     
-#     - name: 'Deploy to Azure Container Instances'
-#       uses: 'azure/aci-deploy@v1'
-#       with:
-#         resource-group: TestGroup
-#         dns-name-label: url-for-container
-#         image: martintestregistry.azurecr.io/blazor-docker-test:${{ github.sha }}
-#         registry-username: ${{ secrets.REGISTRY_USERNAME }}
-#         registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-#         name: blazor-docker-test
-#         location: 'UK south'
+    - name: 'Deploy to Azure Container Instances'
+      uses: 'azure/aci-deploy@v1'
+      with:
+        resource-group: TestGroup
+        dns-name-label: blazor-docker-test-instance
+        image: martintestregistry.azurecr.io/blazor-docker-test:${{ github.sha }}
+        registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        name: blazor-docker-test
+        location: 'UK south'
