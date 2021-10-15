@@ -22,6 +22,11 @@ jobs:
         docker build . --file BlazerDockerTest/Dockerfile -t martintestregistry.azurecr.io/blazor-docker-test:${{ github.sha }}
         docker push martintestregistry.azurecr.io/blazor-docker-test:${{ github.sha }}
     
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
     - name: 'Deploy to Azure Container Instances'
       uses: 'azure/aci-deploy@v1'
       with:
