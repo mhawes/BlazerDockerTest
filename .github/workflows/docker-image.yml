@@ -11,14 +11,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file BlazerDockerTest/Dockerfile
-  
-  list-the-files:
-    needs: build-the-thing
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Example step to run a command 
-      run: ls
     
+    - uses: azure/docker-login@v1
+      with:
+        login-server: martintestregistry.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+        
+    - run: |
+        docker build . --file BlazerDockerTest/Dockerfile -t martintestregistry.azurecr.io/BlazorDockerTest:${{ github.sha }}
+        docker push martintestregistry.azurecr.io/BlazorDockerTest:${{ github.sha }}
+    
+#     - name: 'Deploy to Azure Container Instances'
+#       uses: 'azure/aci-deploy@v1'
+#       with:
+#         resource-group: TestGroup
+#         dns-name-label: url-for-container
+#         image: martintestregistry.azurecr.io/BlazorDockerTest:${{ github.sha }}
+#         registry-username: ${{ secrets.REGISTRY_USERNAME }}
+#         registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+#         name: blazor-docker-test
+#         location: 'UK south'
